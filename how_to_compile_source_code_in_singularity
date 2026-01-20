@@ -1,0 +1,31 @@
+readme1_tools_setup.md
+
+
+singularity shell --bind /storage:/storage /storage/research/nceo/sukun/AMOC_CALC/cdftools.sif
+
+# 
+cd /storage/research/nceo/sukun/AMOC_CALC/TOOLS/GSW-Fortran
+rm -rf build
+rm -f modules/*.o modules/*.mod
+rm -f toolbox/*.o
+rm -f test/*.o test/gsw_check test/poly_check
+rm -f lib/libgsw.a
+
+# 
+singularity shell --bind /storage:/storage container.sif
+
+# 
+Singularity> cd /storage/research/nceo/sukun/AMOC_CALC/TOOLS/GSW-Fortran
+Singularity> mkdir build && cd build
+Singularity> cmake ..
+Singularity> make
+
+# 
+echo "=== Library location ==="
+find . -name "libgsw.a"
+echo "=== Module files location ==="
+find . -name "gsw_mod_toolbox.mod"
+
+cd /path/to/cdftools/src
+make clean
+make
